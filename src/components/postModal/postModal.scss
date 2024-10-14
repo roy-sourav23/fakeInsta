@@ -1,0 +1,55 @@
+.box {
+  @apply h-[450px] w-[330px] md:h-[350px] md:w-[640px]  rounded-lg outline-none border-none;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #262626;
+  box-shadow: 24px;
+  color: rgb(245, 245, 245);
+  overflow: hidden;
+
+  .box-title {
+    @apply text-center py-1 py-[0.5rem] border-b border-[#434343] text-[0.9rem];
+  }
+
+  .box-body {
+    @apply flex flex-col md:flex-row h-full overflow-hidden;
+
+    .content {
+      @apply text-center flex  md:flex-1 flex-col justify-center items-center  h-[45%] md:h-full border-b border-[#434343] md:border-r md:border-r-[#434343];
+
+      .icon {
+        height: 50%;
+        width: 50%;
+        transform: rotate(-8deg);
+        padding-top: 2rem;
+      }
+
+      p {
+        padding-block: 1rem;
+      }
+
+      form {
+        label {
+          @apply bg-[#1877f2] text-xs font-bold px-5 py-2 rounded-md cursor-pointer;
+        }
+      }
+    }
+
+    .info {
+      @apply flex md:flex-1 flex-col h-[55%] md:h-full px-4;
+
+      form {
+        button {
+          @apply bg-[#1877f2] text-xs font-bold px-5 py-2 rounded-md cursor-pointer w-[150px] mx-auto;
+        }
+      }
+    }
+  }
+
+  .closing-btn {
+    @apply text-white absolute text-[2rem] top-[-2%] right-[2%];
+  }
+}

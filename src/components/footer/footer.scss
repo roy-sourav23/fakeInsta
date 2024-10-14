@@ -1,0 +1,25 @@
+.footer {
+  @apply bg-black h-[50px] border-t border-[#434343];
+
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  .iconList {
+    @apply flex items-center justify-evenly h-[100%];
+
+    div {
+      @apply rounded-md p-[0.4rem] cursor-pointer;
+
+      &:hover {
+        background-color: #2f2f2f;
+      }
+    }
+
+    .icon {
+      height: 27px;
+      width: 27px;
+      color: rgb(245, 245, 245);
+    }
+  }
+}

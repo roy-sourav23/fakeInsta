@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .sidebar {
+    @apply w-[200px] bg-black text-[#f5f5f5f5] min-h-[100vh] border-r border-[#434343];
+
+    .logo {
+      @apply text-center py-7 text-[1.8rem] select-none;
+      font-family: "Lobster", sans-serif;
+    }
+
+    ul {
+      li {
+        @apply flex items-center  gap-2 py-3 pl-7 mx-3 my-2 rounded-md cursor-pointer font-normal text-[0.9rem];
+
+        .icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .profile_img{
+          border-radius: 50%;
+        }
+
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        &:hover {
+          @apply bg-[#3a3939];
+        }
+
+        a {
+          @apply flex items-center gap-2 cursor-pointer;
+        }
+      }
+    }
+  }
+}

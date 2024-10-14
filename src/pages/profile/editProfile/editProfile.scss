@@ -1,0 +1,50 @@
+.editProfile {
+  @apply w-[70%] mx-auto text-[#f5f5f5] pt-4;
+
+  h3 {
+    @apply font-semibold py-4;
+  }
+
+  .photoChange {
+    @apply bg-gray-900 py-3 px-4 rounded-xl flex justify-between items-center;
+    .left {
+      @apply flex  gap-2 text-[0.9rem] w-[50%];
+
+      img, .profile_img {
+        @apply w-[50px] h-[50px] rounded-full;
+      }
+    }
+
+    .right {
+      form {
+        label {
+          @apply bg-[#1877f2] text-xs font-semibold px-5 py-2 rounded-md cursor-pointer;
+        }
+      }
+    }
+  }
+
+  .form {
+    @apply text-sm;
+
+    fieldset {
+      @apply py-3;
+
+      label {
+        @apply block py-3 font-semibold;
+      }
+
+      input {
+        @apply py-2.5 px-5 rounded-xl w-full border border-[#434343] outline-none bg-transparent;
+      }
+
+      .website {
+        @apply bg-gray-900 py-2.5 px-5 rounded-xl w-full border-none outline-none;
+      }
+
+      span {
+        @apply text-xs text-[#a8a8a8] px-1;
+      }
+    }
+  }
+}

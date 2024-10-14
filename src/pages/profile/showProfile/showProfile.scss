@@ -1,0 +1,72 @@
+.showProfile {
+  @apply text-[#f5f5f5] flex flex-col w-full;
+  .top {
+    @apply flex px-[2rem] w-full  mx-auto py-10
+    border-b border-[#434343] gap-4;
+
+    .left {
+      @apply w-[40%] flex justify-center;
+
+      .profile_img {
+        @apply h-[100px] w-[100px] md:w-[200px] md:h-[200px] rounded-full my-2;
+      }
+    }
+
+    .right {
+      @apply w-[60%] px-2 py-1;
+
+      div {
+        @apply md:flex md:items-center md:gap-5;
+
+        span {
+          @apply block md:inline-block py-2;
+        }
+        button {
+          @apply text-white text-[0.9rem] font-medium bg-[#434343] rounded-md py-1 px-3 select-none;
+        }
+      }
+
+      .stat {
+        @apply hidden md:flex md:items-center justify-around py-5;
+      }
+
+      .info {
+        @apply my-4 text-[0.9rem];
+      }
+    }
+  }
+
+  .middle {
+    @apply w-full mx-auto border-b border-[#434343] md:hidden flex items-center justify-around text-[0.85rem];
+
+    li {
+      @apply flex flex-col items-center justify-center py-1;
+    }
+  }
+
+  .bottom {
+    .links {
+      @apply w-full  mx-auto border-b border-[#434343] flex items-center justify-around md:justify-center text-[0.85rem] mb-[0.1rem];
+
+      .link {
+        @apply py-1 text-[#a8a8a8] flex items-center justify-center w-full md:w-[150px];
+
+        &.active {
+          @apply text-[#f5f5f5] font-semibold border-t w-full md:w-[150px];
+        }
+
+        .icon {
+          @apply w-[1rem] h-[1rem];
+        }
+
+        span {
+          @apply hidden md:inline-block text-[0.7rem] ml-[0.3rem];
+        }
+      }
+    }
+
+    .imageList {
+      width: 100%;
+    }
+  }
+}

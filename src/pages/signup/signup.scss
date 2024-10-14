@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .formContainer {
+    @apply mx-auto max-w-[330px];
+
+    .errorContainer {
+      @apply min-h-[2rem]  mb-3 flex items-center justify-center text-red-500 text-sm italic;
+    }
+
+    .form {
+      @apply border  border-slate-300 py-10 px-8 m-auto rounded-sm;
+
+      .logo {
+        @apply text-center text-[2.5rem] select-none py-2 text-[#2f2f2f];
+        font-family: "Lobster", sans-serif;
+      }
+      .sub-title {
+        @apply py-4 font-extrabold text-[#888686];
+      }
+
+      fieldset {
+        @apply my-3;
+
+        label {
+          @apply relative;
+
+          span {
+            @apply text-[0.67rem] px-3 py-0 text-slate-700 absolute top-[-0.55rem];
+          }
+
+          input {
+            @apply pt-3.5 pb-3 px-3 bg-slate-50 text-[#000] rounded outline-none border  border-slate-300  focus:border-slate-400 w-full placeholder:text-gray-500 placeholder:select-none text-xs;
+          }
+        }
+      }
+
+      button {
+        @apply bg-[#1877f2] hover:bg-[#0077c5] focus:bg-[#0086dd] w-[100%]  py-[0.4rem]  mt-6 rounded-lg text-[#eff8fe] font-medium select-none;
+
+        &:disabled {
+          @apply bg-[#60a1f6] cursor-not-allowed;
+        }
+      }
+    }
+
+    .linkContainer {
+      @apply border border-slate-300  max-w-[350px] m-auto my-6 py-3;
+
+      p {
+        @apply text-sm;
+
+        a {
+          @apply px-2 font-medium text-[#0095f6];
+        }
+      }
+    }
+  }
+}
