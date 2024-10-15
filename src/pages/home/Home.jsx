@@ -2,27 +2,35 @@ import React, { useContext, useState, useEffect } from "react";
 import Alert from "@mui/material/Alert";
 import Layout from "../../components/layout/Layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../../context/UserContext";
 import FeedPosts from "../../components/userFeed/FeedPosts";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/loginSlice";
 
 const Home = () => {
-  const { authUser, updateAuthUser, logout } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [msg, useMsg] = useState(location.state?.msg || "");
+  const dispatch = useDispatch();
+  const authUser = useSelector((state) => state.login.user);
   // console.log("msg", msg);
-  setTimeout(() => {
-    useMsg("");
-  }, 4000);
+  // console.log("user", userSelector);
+
+  // setTimeout(() => {
+  //   useMsg("");
+  // }, 4000);
 
   useEffect(() => {
     document.title = "Home | FakeInsta";
   }, []);
 
   const handleLogout = (e) => {
-    logout();
+    dispatch(logout());
     navigate("/accounts/login");
   };
+
+  if (!authUser) {
+    return <div>nothing to see</div>;
+  }
 
   return (
     <Layout>

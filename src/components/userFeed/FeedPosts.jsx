@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../firebase";
-import UserContext from "../../context/UserContext";
 import FeedPost from "./FeedPost";
+import { useSelector } from "react-redux";
 
 const FeedPosts = () => {
-  // console.log("running!");
+  const authUser = useSelector((state) => state.login.user);
 
-  const { authUser } = useContext(UserContext);
   const [feedPosts, setFeedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 

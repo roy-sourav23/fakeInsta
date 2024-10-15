@@ -9,16 +9,19 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { storage, db } from "../../../firebase.js";
-import UserContext from "../../context/UserContext.jsx";
 import { Box, Modal } from "@mui/material";
 import {
   CropOriginalOutlined as CropOriginalOutlinedIcon,
   CloseOutlined as CloseOutlinedIcon,
 } from "@mui/icons-material";
 import "./postModal.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { userUpdated } from "../../redux/loginSlice.js";
 
 const PostModal = ({ open, handleClose }) => {
-  const { authUser, updateAuthUser } = useContext(UserContext);
+  const authUser = useSelector((state) => state.login.user);
+  const dispatch = useDispatch();
+
   const [tempImageFile, setTempImageFile] = useState(null);
   const [postDetails, setPostDetails] = useState({
     id: null,
@@ -32,8 +35,6 @@ const PostModal = ({ open, handleClose }) => {
   const form1Ref = useRef(null);
   const form2Ref = useRef(null);
 
-  // console.log("postDetails", postDetails);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPostDetails((prevData) => ({ ...prevData, [name]: value }));
@@ -42,7 +43,6 @@ const PostModal = ({ open, handleClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log("inside handlesubmit");
     // Add a new document with a generated id.
     const docRef = await addDoc(collection(db, "posts"), {
       ...postDetails,
@@ -55,7 +55,7 @@ const PostModal = ({ open, handleClose }) => {
       posts: arrayUnion(docRef.id),
     });
 
-    updateAuthUser();
+    dispatch(userUpdated(authUser.uid));
 
     handleClose();
     setTempImageFile(null);

@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import UserContext from "../../context/UserContext";
+import React, { useEffect, useState } from "react";
 import {
   doc,
   getDoc,
@@ -8,9 +7,12 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../../../firebase.js";
+import { useDispatch, useSelector } from "react-redux";
+import { userUpdated } from "../../redux/loginSlice.js";
 
 const FollowUnfollowButton = ({ userID }) => {
-  const { authUser, updateAuthUser } = useContext(UserContext);
+  const authUser = useSelector((state) => state.login.user);
+  const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const FollowUnfollowButton = ({ userID }) => {
       }
 
       const currentUserData = currentUserDoc.data();
-      console.log("currentUserData", currentUserData);
+      // console.log("currentUserData", currentUserData);
 
       const isFollowing =
         currentUserData.following && currentUserData.following.includes(userID);
@@ -72,12 +74,12 @@ const FollowUnfollowButton = ({ userID }) => {
       });
 
       setIsFollowing(!isFollowing);
-      updateAuthUser();
+      dispatch(userUpdated(authUser.uid));
     } catch (error) {
       console.error("Error following/unfollowing user:", error);
     }
 
-    updateAuthUser();
+    dispatch(userUpdated(authUser.uid));
   };
 
   return (

@@ -3,13 +3,16 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../../../firebase";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../../../context/UserContext";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Layout from "../../../components/layout/Layout";
 import "./editProfile.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { userUpdated } from "../../../redux/loginSlice";
 
 const EditProfile = () => {
-  const { authUser, updateAuthUser } = useContext(UserContext);
+  const authUser = useSelector((state) => state.login.user);
+  const dispatch = useDispatch();
+
   const userID = authUser.uid;
 
   const [profile, setProfile] = useState(authUser);
@@ -119,7 +122,9 @@ const EditProfile = () => {
         website_url: profile.website_url,
       });
 
-      updateAuthUser();
+      // updateAuthUser(authUser.uid);
+      dispatch(userUpdated(authUser.uid));
+
       navigate(-1);
     } catch (e) {
       console.error("error", e);

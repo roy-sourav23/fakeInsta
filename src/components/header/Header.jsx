@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { collection, getDocs, where, query } from "firebase/firestore";
 import {
@@ -6,13 +6,13 @@ import {
   FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
 } from "@mui/icons-material";
 import { db } from "../../../firebase.js";
-import UserContext from "../../context/UserContext";
 
 import "./header.scss";
 import FollowUnfollowButton from "../followUnfollowButton./FollowUnfollowButton.jsx";
+import { useDispatch, useSelector } from "react-redux";
 
 const HeaderDrawer = ({ open, user }) => {
-  const { authUser } = useContext(UserContext);
+  const authUser = useSelector((state) => state.login.user);
 
   return (
     <div
@@ -57,7 +57,8 @@ const Header = () => {
   const [searchField, setSearchField] = useState("");
   const formRef = useRef(null);
 
-  const { authUser, updateAuthUser } = useContext(UserContext);
+  const authUser = useSelector((state) => state.login.user);
+  const dispatch = useDispatch();
 
   const getUserByUsername = async (username) => {
     try {
@@ -88,7 +89,8 @@ const Header = () => {
     const user = await getUserByUsername(searchField);
     setFoundUser(user);
     formRef.current.reset();
-    updateAuthUser();
+
+    dispatch(userUpdated(authUser.uid));
   };
 
   return (

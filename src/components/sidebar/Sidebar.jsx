@@ -15,16 +15,15 @@ import { Link } from "react-router-dom";
 import PostModal from "../postModal/PostModal";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../firebase.js";
-import UserContext from "../../context/UserContext";
+
 import FollowUnfollowButton from "../followUnfollowButton./FollowUnfollowButton.jsx";
+import { useSelector } from "react-redux";
 
 const SidebarDrawer = ({ open }) => {
   const formRef = useRef(null);
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState(null);
-
-  const { authUser } = useContext(UserContext);
-  // console.log("userContext", authUser);
+  const authUser = useSelector((state) => state.login.user);
 
   const getUserByUsername = async (userName) => {
     const userRef = collection(db, "users");
@@ -108,7 +107,8 @@ const SidebarDrawer = ({ open }) => {
 };
 
 const Sidebar = () => {
-  const { authUser } = useContext(UserContext);
+  const authUser = useSelector((state) => state.login.user);
+
   const [open, setOpen] = useState(false);
   const [openSearchField, setOpenSearchField] = useState(false);
   const handleOpen = () => setOpen(true);

@@ -1,15 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../../firebase.js";
-import UserContext from "../../context/UserContext.jsx";
+
 import Alert from "@mui/material/Alert";
 import "./login.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { userLoggedIn } from "../../redux/loginSlice.js";
 
 const Login = () => {
-  const { authUser, login } = useContext(UserContext);
+  const dispatch = useDispatch();
+
+  const loginSelector = useSelector((state) => state.login);
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -28,18 +30,18 @@ const Login = () => {
     document.title = "Login | FakeInsta";
   }, []);
 
-  const fetchData = async (uid) => {
-    const userRef = doc(db, "users", uid);
-    const userDocSnap = await getDoc(userRef);
+  // const fetchData = async (uid) => {
+  //   const userRef = doc(db, "users", uid);
+  //   const userDocSnap = await getDoc(userRef);
 
-    let userData = null;
-    if (userDocSnap.exists()) {
-      userData = userDocSnap.data();
-    } else {
-      console.log("no such user");
-    }
-    return userData;
-  };
+  //   let userData = null;
+  //   if (userDocSnap.exists()) {
+  //     userData = userDocSnap.data();
+  //   } else {
+  //     console.log("no such user");
+  //   }
+  //   return userData;
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,23 +52,18 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await signInWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
-      const { uid } = response.user;
-      const current_user = await fetchData(uid);
-      login(current_user);
-
-      navigate("/", { state: { msg: "login successful!" } });
+      dispatch(userLoggedIn(user));
     } catch (e) {
-      console.error("error", e);
+      // console.error("error", e);
       const error = e.code?.split("/");
-      setError(error[1]);
+      if (error) setError(error[1]);
       setTimeout(() => {
         setError("");
       }, 3000);
+    }
+
+    if (loginSelector.user) {
+      navigate("/", { state: { msg: "login successful!" } });
     }
   };
 

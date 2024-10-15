@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../components/layout/Layout";
 import "./showProfile.scss";
 
@@ -21,12 +21,14 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../../../../firebase";
-import UserContext from "../../../context/UserContext";
+
 import FollowUnfollowButton from "../../../components/followUnfollowButton./FollowUnfollowButton";
+import { useSelector } from "react-redux";
 
 const ShowProfile = () => {
   const { userName } = useParams();
-  const { authUser } = useContext(UserContext);
+
+  const authUser = useSelector((state) => state.login.user);
 
   const [userProfile, setUserProfile] = useState(null);
   const [allPosts, setAllPosts] = useState(null);

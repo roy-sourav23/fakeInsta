@@ -1,5 +1,5 @@
 import "./footer.scss";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   HomeOutlined as HomeOutlinedIcon,
   ExploreOutlined as ExploreOutlinedIcon,
@@ -11,11 +11,10 @@ import {
 
 import { Link } from "react-router-dom";
 import PostModal from "../postModal/PostModal";
-import UserContext from "../../context/UserContext";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
-  const { authUser } = useContext(UserContext);
-  // console.log("authUser", authUser);
+  const authUser = useSelector((state) => state.login.user);
 
   const [openModal, setOpenModal] = useState(false);
 

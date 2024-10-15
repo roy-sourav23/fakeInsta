@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import UserContext from "../context/UserContext";
+import React from "react";
+
 import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProtectedRoutes = () => {
-  const { isLoggedIn } = useContext(UserContext);
-  const isAuthenticated = isLoggedIn;
+  const isAuthenticated = useSelector((state) => state.login.user);
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/accounts/login" />;
 };

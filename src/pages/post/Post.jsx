@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import UserContext from "../../context/UserContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 
@@ -13,11 +12,13 @@ import {
   ChatBubbleOutlineOutlined as ChatBubbleOutlineOutlinedIcon,
   BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
 } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 
 const Post = () => {
-  const { authUser, updateAuthUser } = useContext(UserContext);
+  const authUser = useSelector((state) => state.login.user);
+
   const { postId } = useParams();
-  console.log("postID", postId);
+  // console.log("postID", postId);
 
   const navigate = useNavigate();
   const [post, setPost] = useState(null);

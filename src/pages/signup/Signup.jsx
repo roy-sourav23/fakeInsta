@@ -54,7 +54,7 @@ const Signup = () => {
         posts: [],
       });
 
-      console.log("reponse2", response2);
+      // console.log("reponse2", response2);
 
       navigate("/accounts/login", { state: { key: "signup successful!" } });
     } catch (e) {
