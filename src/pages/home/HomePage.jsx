@@ -6,7 +6,7 @@ import FeedPosts from "../../components/userFeed/FeedPosts";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/loginSlice";
 
-const Home = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [msg, useMsg] = useState(location.state?.msg || "");
@@ -81,4 +81,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

@@ -7,7 +7,7 @@ import "./login.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoggedIn } from "../../redux/loginSlice.js";
 
-const Login = () => {
+const LoginPage = () => {
   const dispatch = useDispatch();
 
   const loginSelector = useSelector((state) => state.login);
@@ -137,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

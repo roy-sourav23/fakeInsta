@@ -9,7 +9,7 @@ import "./editProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdated } from "../../../redux/loginSlice";
 
-const EditProfile = () => {
+const EditProfilePage = () => {
   const authUser = useSelector((state) => state.login.user);
   const dispatch = useDispatch();
 
@@ -217,4 +217,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default EditProfilePage;

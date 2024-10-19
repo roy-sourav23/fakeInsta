@@ -10,6 +10,7 @@ import { db } from "../../../firebase.js";
 import "./header.scss";
 import FollowUnfollowButton from "../followUnfollowButton./FollowUnfollowButton.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { userUpdated } from "../../redux/loginSlice.js";
 
 const HeaderDrawer = ({ open, user }) => {
   const authUser = useSelector((state) => state.login.user);

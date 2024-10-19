@@ -6,7 +6,7 @@ import { auth, db } from "../../../firebase.js";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import "./signup.scss";
 
-const Signup = () => {
+const SignupPage = () => {
   const [user, setUser] = useState({
     email: "",
     fullName: "",
@@ -167,4 +167,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;

@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Home from "../pages/home/Home";
-import Login from "../pages/login/Login";
-import Signup from "../pages/signup/Signup";
-import EditProfile from "../pages/profile/editProfile/EditProfile";
-import ShowProfile from "../pages/profile/showProfile/ShowProfile";
+import LoginPage from "../pages/login/LoginPage";
+import SignupPage from "../pages/signup/SignupPage";
+import EditProfilePage from "../pages/profile/editProfile/EditProfilePage";
+import ShowProfilePage from "../pages/profile/showProfile/ShowProfilePage";
 import Post from "../pages/post/Post";
 import ProtectedRoutes from "./ProtectedRoutes";
+import HomePage from "../pages/home/HomePage";
 
 const Routing = () => {
   return (
@@ -15,18 +15,18 @@ const Routing = () => {
       <Routes>
         <Route path="/">
           <Route element={<ProtectedRoutes />}>
-            <Route index element={<Home />} />
+            <Route index element={<HomePage />} />
           </Route>
           <Route path="accounts">
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="signup" element={<SignupPage />} />
             <Route element={<ProtectedRoutes />}>
-              <Route path="edit" element={<EditProfile />} />
+              <Route path="edit" element={<EditProfilePage />} />
             </Route>
           </Route>
 
           <Route element={<ProtectedRoutes />}>
-            <Route path=":userName" element={<ShowProfile />} />
+            <Route path=":userName" element={<ShowProfilePage />} />
             <Route path="/p/:postId" element={<Post />} />
           </Route>
         </Route>

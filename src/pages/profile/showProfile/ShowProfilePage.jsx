@@ -25,7 +25,7 @@ import { db } from "../../../../firebase";
 import FollowUnfollowButton from "../../../components/followUnfollowButton./FollowUnfollowButton";
 import { useSelector } from "react-redux";
 
-const ShowProfile = () => {
+const ShowProfilePage = () => {
   const { userName } = useParams();
 
   const authUser = useSelector((state) => state.login.user);
@@ -188,4 +188,4 @@ const ShowProfile = () => {
   );
 };
 
-export default ShowProfile;
+export default ShowProfilePage;

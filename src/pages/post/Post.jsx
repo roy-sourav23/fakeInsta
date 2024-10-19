@@ -15,26 +15,46 @@ import {
 import { useSelector } from "react-redux";
 
 const Post = () => {
-  const authUser = useSelector((state) => state.login.user);
+  // const authUser = useSelector((state) => state.login.user);
 
   const { postId } = useParams();
   // console.log("postID", postId);
 
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
+  const [postCreator, setPostCreator] = useState(null);
 
   useEffect(() => {
     document.title = "Post | FakeInsta";
   }, []);
+
   useEffect(() => {
     const getPostInfo = async () => {
       const postRef = doc(db, "posts", postId);
       const postDocSnap = await getDoc(postRef);
       const postData = postDocSnap.data();
       setPost(postData);
+      return postData;
     };
-    getPostInfo();
+    // we will get this userId from getPostInfo function
+    const getPostCreatorInfo = async (userId) => {
+      const postCreatorRef = doc(db, "users", userId);
+      const postCreatorDocSnap = await getDoc(postCreatorRef);
+      const postCreatorData = postCreatorDocSnap.data();
+      setPostCreator(postCreatorData);
+    };
+
+    const getDetails = async () => {
+      const data = await getPostInfo();
+
+      getPostCreatorInfo(data.createdBy);
+    };
+
+    getDetails();
   }, []);
+
+  console.log("post", post);
+  console.log("postCreator", postCreator);
 
   return (
     <Layout>
@@ -47,20 +67,20 @@ const Post = () => {
             <ArrowBackIcon />
             return
           </p>
-          {authUser && post ? (
+          {postCreator && post ? (
             <div className="mb-12  max-w-[560px] border-b border-[#434343] pb-4 mx-auto">
               <div className="postHeader flex items-center justify-between p-2">
                 <div className="flex items-center gap-2 py-1">
-                  <Link to={`/${authUser.username}`}>
+                  <Link to={`/${postCreator.username}`}>
                     <img
-                      src={authUser.profilePicURL}
+                      src={postCreator.profilePicURL}
                       className="w-[2.25rem] h-[2.25rem] rounded-full object-cover"
                     />
                   </Link>
 
                   <p className="text-[f5f5f5] text-[0.9rem] font-medium hover:text-[#0095f6]">
-                    <Link to={`/${authUser.username}`}>
-                      {authUser.username}
+                    <Link to={`/${postCreator.username}`}>
+                      {postCreator.username}
                     </Link>
                   </p>
                 </div>
@@ -91,7 +111,7 @@ const Post = () => {
                 </p>
                 <p>
                   <span className="text-[f5f5f5] text-[0.9rem] font-medium pr-3">
-                    {authUser.username}
+                    {postCreator.username}
                   </span>
 
                   <span className="text-[f5f5f5] text-[0.82rem]">
