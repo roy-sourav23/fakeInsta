@@ -125,47 +125,57 @@ const Sidebar = () => {
         <div className="logo">FakeInsta</div>
         <ul className="iconList">
           <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              <HomeOutlinedIcon className="icon" />
-              <span>Home</span>
-            </NavLink>
+            <div className="navContent">
+              <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
+                <HomeOutlinedIcon className="icon" />
+                <span>Home</span>
+              </NavLink>
+            </div>
           </li>
           <li onClick={toggleSearchField}>
-            <SearchOutlinedIcon className="icon" />
-            <span>Search</span>
+            <div className="navContent">
+              <SearchOutlinedIcon className="icon" />
+              <span>Search</span>
+            </div>
           </li>
           <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              <ExploreOutlinedIcon className="icon" />
-              <span>Explore</span>
-            </NavLink>
+            <div className="navContent">
+              <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
+                <ExploreOutlinedIcon className="icon" />
+                <span>Explore</span>
+              </NavLink>
+            </div>
           </li>
 
           <li onClick={handleOpen}>
-            <AddBoxOutlinedIcon className="icon" />
-            <span>Create</span>
+            <div className="navContent">
+              <AddBoxOutlinedIcon className="icon" />
+              <span>Create</span>
+            </div>
           </li>
           <li>
-            <NavLink
-              to={`/${authUser.username}`}
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              {authUser.profilePicURL ? (
-                <img
-                  src={authUser.profilePicURL}
-                  className="icon profile_img"
-                />
-              ) : (
-                <PersonIcon className="icon" />
-              )}
-              <span>Profile</span>
-            </NavLink>
+            <div className="navContent">
+              <NavLink
+                to={`/${authUser.username}`}
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
+                {authUser.profilePicURL ? (
+                  <img
+                    src={authUser.profilePicURL}
+                    className="icon profile_img"
+                  />
+                ) : (
+                  <PersonIcon className="icon" />
+                )}
+                <span>Profile</span>
+              </NavLink>
+            </div>
           </li>
         </ul>
       </div>
