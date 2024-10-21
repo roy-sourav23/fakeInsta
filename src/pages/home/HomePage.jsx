@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Alert from "@mui/material/Alert";
 import { AccountCircle as AccountCircleIcon } from "@mui/icons-material";
 import Layout from "../../components/layout/Layout";
@@ -10,18 +10,21 @@ import { logout } from "../../redux/loginSlice";
 const HomePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [msg, useMsg] = useState(location.state?.msg || "");
+  const [msg, setMsg] = useState(location.state?.msg || "");
+  const [showMsg, setShowMsg] = useState(true);
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.login.user);
-  // console.log("msg", msg);
-  // console.log("user", userSelector);
-
-  // setTimeout(() => {
-  //   useMsg("");
-  // }, 4000);
 
   useEffect(() => {
     document.title = "Home | FakeInsta";
+    const timeId = setTimeout(() => {
+      setShowMsg(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeId);
+      setMsg("");
+    };
   }, []);
 
   const handleLogout = (e) => {
@@ -36,7 +39,7 @@ const HomePage = () => {
   return (
     <Layout>
       <div className="text-center text-white mt-10 w-full ">
-        {msg ? (
+        {msg && showMsg ? (
           <Alert
             severity="success"
             className="absolute w-full max-w-[300px] top-[3rem] right-[4rem]"

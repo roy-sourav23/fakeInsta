@@ -30,18 +30,11 @@ const LoginPage = () => {
     document.title = "Login | FakeInsta";
   }, []);
 
-  // const fetchData = async (uid) => {
-  //   const userRef = doc(db, "users", uid);
-  //   const userDocSnap = await getDoc(userRef);
-
-  //   let userData = null;
-  //   if (userDocSnap.exists()) {
-  //     userData = userDocSnap.data();
-  //   } else {
-  //     console.log("no such user");
-  //   }
-  //   return userData;
-  // };
+  useEffect(() => {
+    if (loginSelector.user) {
+      navigate("/", { state: { msg: "login successful!" } });
+    }
+  }, [loginSelector.user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,10 +53,6 @@ const LoginPage = () => {
       setTimeout(() => {
         setError("");
       }, 3000);
-    }
-
-    if (loginSelector.user) {
-      navigate("/", { state: { msg: "login successful!" } });
     }
   };
 

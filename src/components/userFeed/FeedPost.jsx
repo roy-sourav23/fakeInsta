@@ -8,6 +8,7 @@ import {
   ChatBubbleOutlineOutlined as ChatBubbleOutlineOutlinedIcon,
   BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
 } from "@mui/icons-material";
+import { AccountCircle as AccountCircleIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 const FeedPost = ({ key, post }) => {
@@ -34,10 +35,14 @@ const FeedPost = ({ key, post }) => {
           <div className="postHeader flex items-center justify-between p-2">
             <div className="flex items-center gap-2 py-1">
               <Link to={`/${postCreator.username}`}>
-                <img
-                  src={postCreator.profilePicURL}
-                  className="w-[2.25rem] h-[2.25rem] rounded-full object-cover"
-                />
+                {postCreator.profilePicURL ? (
+                  <img
+                    src={postCreator.profilePicURL}
+                    className="w-[2.25rem] h-[2.25rem] rounded-full object-cover"
+                  />
+                ) : (
+                  <AccountCircleIcon />
+                )}
               </Link>
 
               <p className="text-[f5f5f5] text-[0.9rem] font-medium hover:text-[#0095f6]">
