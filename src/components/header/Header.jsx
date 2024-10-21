@@ -1,13 +1,16 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs, where, query } from "firebase/firestore";
-import { SearchOutlined as SearchOutlinedIcon } from "@mui/icons-material";
+import {
+  SearchOutlined as SearchOutlinedIcon,
+  Logout as LogoutIcon,
+} from "@mui/icons-material";
 import { db } from "../../../firebase.js";
 
 import "./header.scss";
 import FollowUnfollowButton from "../followUnfollowButton./FollowUnfollowButton.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdated } from "../../redux/loginSlice.js";
+import { logout, userUpdated } from "../../redux/loginSlice.js";
 
 const HeaderDrawer = ({ open, user }) => {
   const authUser = useSelector((state) => state.login.user);
@@ -57,6 +60,7 @@ const Header = () => {
 
   const authUser = useSelector((state) => state.login.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getUserByUsername = async (username) => {
     try {
@@ -91,6 +95,11 @@ const Header = () => {
     dispatch(userUpdated(authUser.uid));
   };
 
+  const handleLogout = (e) => {
+    dispatch(logout());
+    navigate("/accounts/login");
+  };
+
   return (
     <div className="header">
       <div className="logo">FakeInsta</div>
@@ -110,6 +119,9 @@ const Header = () => {
             </label>
           </form>
           <HeaderDrawer open={open} user={foundUser} />
+        </div>
+        <div className="icon ">
+          <LogoutIcon onClick={handleLogout} />
         </div>
       </div>
     </div>

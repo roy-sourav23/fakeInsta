@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   collection,
@@ -13,7 +13,9 @@ import { Box, Modal } from "@mui/material";
 import {
   CropOriginalOutlined as CropOriginalOutlinedIcon,
   CloseOutlined as CloseOutlinedIcon,
+  AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
+
 import "./postModal.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdated } from "../../redux/loginSlice.js";
@@ -164,11 +166,17 @@ const PostModal = ({ open, handleClose }) => {
           </div>
           <div className="info">
             <div className="flex items-center gap-3 pt-3 pb-4">
-              <div className="w-[2.3rem] h-[2.3rem] rounded-full bg-red-300 overflow-hidden">
-                <img
-                  src={`${authUser.profilePicURL}`}
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-[2.3rem] h-[2.3rem] rounded-full  overflow-hidden">
+                {authUser.profilePicURL ? (
+                  <img
+                    src={`${authUser.profilePicURL}`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <AccountCircleIcon
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                )}
               </div>
               <p className="text-white font-medium text-[1rem]">
                 {authUser.username}

@@ -51,7 +51,8 @@ const SidebarDrawer = ({ open }) => {
     <div
       className={`h-full w-[280%] absolute ${
         open ? "flex " : "hidden"
-      } z-10 border-r border-[#434343] bg-black text-[#a8a8a8]`}
+      }  border-r border-[#434343] bg-black text-[#a8a8a8]`}
+      style={{ zIndex: "10" }}
     >
       <div className="w-[36%]"></div>
       <div className="w-[64%] py-7 px-6">
