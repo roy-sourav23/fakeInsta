@@ -13,8 +13,9 @@ import {
   BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import SinglePostActionsComp from "../../components/post/SinglePostActionsComp";
 
-const Post = () => {
+const SinglePostPage = () => {
   // const authUser = useSelector((state) => state.login.user);
 
   const { postId } = useParams();
@@ -53,8 +54,8 @@ const Post = () => {
     getDetails();
   }, []);
 
-  console.log("post", post);
-  console.log("postCreator", postCreator);
+  // console.log("post", post);
+  // console.log("postCreator", postCreator);
 
   return (
     <Layout>
@@ -96,19 +97,8 @@ const Post = () => {
                 />
               </div>
               <div className="postFooter py-2 flex flex-col w-full items-start">
-                <div className="flex items-center justify-between w-full py-2">
-                  <div className="flex items-center gap-3">
-                    <FavoriteBorderOutlinedIcon />
-                    <ChatBubbleOutlineOutlinedIcon />
-                    <SendOutlinedIcon />
-                  </div>
-                  <div>
-                    <BookmarkBorderOutlinedIcon />
-                  </div>
-                </div>
-                <p className="p-2 text-[0.9rem] font-medium">
-                  {post.likes.length} {post.likes.length < 2 ? "like" : "likes"}{" "}
-                </p>
+                <SinglePostActionsComp postId={postId} post={post} />
+
                 <p>
                   <span className="text-[f5f5f5] text-[0.9rem] font-medium pr-3">
                     {postCreator.username}
@@ -129,4 +119,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default SinglePostPage;

@@ -5,7 +5,7 @@ import LoginPage from "../pages/login/LoginPage";
 import SignupPage from "../pages/signup/SignupPage";
 import EditProfilePage from "../pages/profile/editProfile/EditProfilePage";
 import ShowProfilePage from "../pages/profile/showProfile/ShowProfilePage";
-import Post from "../pages/post/Post";
+import SinglePostPage from "../pages/post/SinglePostPage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import HomePage from "../pages/home/HomePage";
 
@@ -27,7 +27,7 @@ const Routing = () => {
 
           <Route element={<ProtectedRoutes />}>
             <Route path=":userName" element={<ShowProfilePage />} />
-            <Route path="/p/:postId" element={<Post />} />
+            <Route path="/p/:postId" element={<SinglePostPage />} />
           </Route>
         </Route>
       </Routes>
