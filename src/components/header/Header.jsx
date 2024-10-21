@@ -1,10 +1,7 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { collection, getDocs, where, query } from "firebase/firestore";
-import {
-  SearchOutlined as SearchOutlinedIcon,
-  FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
-} from "@mui/icons-material";
+import { SearchOutlined as SearchOutlinedIcon } from "@mui/icons-material";
 import { db } from "../../../firebase.js";
 
 import "./header.scss";
@@ -113,10 +110,6 @@ const Header = () => {
             </label>
           </form>
           <HeaderDrawer open={open} user={foundUser} />
-        </div>
-
-        <div className="icon ">
-          <FavoriteBorderOutlinedIcon />
         </div>
       </div>
     </div>

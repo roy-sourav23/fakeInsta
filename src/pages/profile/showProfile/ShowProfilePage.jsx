@@ -113,7 +113,7 @@ const ShowProfilePage = () => {
 
               <div className="stat">
                 <span>
-                  {userProfile.posts.length}{" "}
+                  {userProfile.posts.length || 0}{" "}
                   {userProfile.posts.length <= 1 ? "post" : "posts"}
                 </span>
                 <span>{userProfile.followers.length} followers</span>

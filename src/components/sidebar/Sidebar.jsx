@@ -144,7 +144,7 @@ const Sidebar = () => {
           <li>
             <div className="navContent">
               <NavLink
-                to="/"
+                to="/explore"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 <ExploreOutlinedIcon className="icon" />

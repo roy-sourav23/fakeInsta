@@ -36,7 +36,7 @@ const Footer = () => {
         </li>
         <li>
           <NavLink
-            to="/"
+            to="/explore"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             <ExploreOutlinedIcon className="icon" />

@@ -8,6 +8,7 @@ import ShowProfilePage from "../pages/profile/showProfile/ShowProfilePage";
 import SinglePostPage from "../pages/post/SinglePostPage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import HomePage from "../pages/home/HomePage";
+import ExplorePage from "../pages/explore/ExplorePage";
 
 const Routing = () => {
   return (
@@ -16,6 +17,7 @@ const Routing = () => {
         <Route path="/">
           <Route element={<ProtectedRoutes />}>
             <Route index element={<HomePage />} />
+            <Route path="/explore" element={<ExplorePage />} />
           </Route>
           <Route path="accounts">
             <Route path="login" element={<LoginPage />} />
