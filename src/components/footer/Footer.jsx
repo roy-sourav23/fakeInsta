@@ -1,15 +1,14 @@
 import "./footer.scss";
+// import "./footer.css";
 import React, { useState } from "react";
 import {
   HomeOutlined as HomeOutlinedIcon,
   ExploreOutlined as ExploreOutlinedIcon,
-  MovieOutlined as MovieOutlinedIcon,
-  ChatBubbleOutlineOutlined as ChatBubbleOutlineOutlinedIcon,
   AddBoxOutlined as AddBoxOutlinedIcon,
   Person as PersonIcon,
 } from "@mui/icons-material";
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import PostModal from "../postModal/PostModal";
 import { useSelector } from "react-redux";
 
@@ -28,38 +27,35 @@ const Footer = () => {
 
       <ul className="iconList ">
         <li>
-          <Link to="/">
-            <div>
-              <HomeOutlinedIcon className="icon" />
-            </div>
-          </Link>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            <HomeOutlinedIcon className="icon" />
+          </NavLink>
         </li>
         <li>
-          <div>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
             <ExploreOutlinedIcon className="icon" />
-          </div>
+          </NavLink>
         </li>
-        <li>
-          <div>
-            <MovieOutlinedIcon className="icon" />
-          </div>
-        </li>
+
         <li>
           <div onClick={handleOpenModal}>
             <AddBoxOutlinedIcon className="icon" />
           </div>
         </li>
+
         <li>
-          <div>
-            <ChatBubbleOutlineOutlinedIcon className="icon" />
-          </div>
-        </li>
-        <li>
-          <Link to={`/${authUser?.username}`}>
-            <div>
-              <PersonIcon className="icon" />
-            </div>
-          </Link>
+          <NavLink
+            to={`/${authUser?.username}`}
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            <PersonIcon className="icon" />
+          </NavLink>
         </li>
       </ul>
     </div>

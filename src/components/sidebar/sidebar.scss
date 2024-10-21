@@ -20,7 +20,7 @@
           height: 20px;
         }
 
-        .profile_img{
+        .profile_img {
           border-radius: 50%;
         }
 
@@ -35,7 +35,18 @@
         }
 
         a {
-          @apply flex items-center gap-2 cursor-pointer;
+          @apply flex items-center gap-2 cursor-pointer w-full h-full;
+
+          &.active {
+            @apply w-full h-full;
+            background-color: #494747;
+
+            padding: 5px;
+
+            border-radius: 5px;
+            padding: inherit;
+            // text-decoration: underline;
+          }
         }
       }
     }

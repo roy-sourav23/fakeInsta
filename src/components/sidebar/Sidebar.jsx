@@ -11,7 +11,7 @@ import {
   Person as PersonIcon,
 } from "@mui/icons-material";
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import PostModal from "../postModal/PostModal";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../firebase.js";
@@ -85,12 +85,12 @@ const SidebarDrawer = ({ open }) => {
                   className="w-[40px] h-[40px] object-cover rounded-full"
                 />
                 <p>
-                  <Link
+                  <NavLink
                     to={`/${user.username}`}
                     className="cursor-pointer hover:text-[#0095f6]"
                   >
                     {user.username}
-                  </Link>
+                  </NavLink>
                 </p>
               </div>
               {authUser.username != user.username ? (
@@ -125,37 +125,37 @@ const Sidebar = () => {
         <div className="logo">FakeInsta</div>
         <ul className="iconList">
           <li>
-            <Link to="/">
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
               <HomeOutlinedIcon className="icon" />
               <span>Home</span>
-            </Link>
+            </NavLink>
           </li>
           <li onClick={toggleSearchField}>
             <SearchOutlinedIcon className="icon" />
             <span>Search</span>
           </li>
           <li>
-            <ExploreOutlinedIcon className="icon" />
-            <span>Explore</span>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              <ExploreOutlinedIcon className="icon" />
+              <span>Explore</span>
+            </NavLink>
           </li>
-          <li>
-            <MovieOutlinedIcon className="icon" />
-            <span>Reels</span>
-          </li>
-          <li>
-            <ChatBubbleOutlineOutlinedIcon className="icon" />
-            <span>Messages</span>
-          </li>
-          <li>
-            <FavoriteBorderOutlinedIcon className="icon" />
-            <span>Notifications</span>
-          </li>
+
           <li onClick={handleOpen}>
             <AddBoxOutlinedIcon className="icon" />
             <span>Create</span>
           </li>
           <li>
-            <Link to={`/${authUser.username}`}>
+            <NavLink
+              to={`/${authUser.username}`}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
               {authUser.profilePicURL ? (
                 <img
                   src={authUser.profilePicURL}
@@ -165,7 +165,7 @@ const Sidebar = () => {
                 <PersonIcon className="icon" />
               )}
               <span>Profile</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </div>

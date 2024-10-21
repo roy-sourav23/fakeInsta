@@ -1,25 +1,32 @@
 .footer {
-  @apply bg-black h-[50px] border-t border-[#434343];
-
+  background-color: black;
+  height: 50px;
+  border-top: 1px solid #434343;
   position: fixed;
   bottom: 0;
   width: 100%;
 
   .iconList {
-    @apply flex items-center justify-evenly h-[100%];
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
 
-    div {
-      @apply rounded-md p-[0.4rem] cursor-pointer;
+  a {
+    display: block;
+    padding: 4px;
+    border-radius: 5px;
 
-      &:hover {
-        background-color: #2f2f2f;
-      }
+    &.active {
+      background-color: #9c9797;
+      color: red;
     }
+  }
 
-    .icon {
-      height: 27px;
-      width: 27px;
-      color: rgb(245, 245, 245);
-    }
+  .icon {
+    height: 27px;
+    width: 27px;
+    color: rgb(245, 245, 245);
   }
 }

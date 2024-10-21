@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Alert from "@mui/material/Alert";
+import { AccountCircle as AccountCircleIcon } from "@mui/icons-material";
 import Layout from "../../components/layout/Layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import FeedPosts from "../../components/userFeed/FeedPosts";
@@ -51,10 +52,14 @@ const HomePage = () => {
           <div className="lg:w-[30%] hidden lg:block mx-auto ">
             <div className="bg-[#212020] py-2 px-3 rounded flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <img
-                  src={authUser.profilePicURL}
-                  className="w-[40px] h-[40px] object-cover rounded-full"
-                />
+                {authUser.profilePicURL ? (
+                  <img
+                    src={authUser.profilePicURL}
+                    className="w-[40px] h-[40px] object-cover rounded-full"
+                  />
+                ) : (
+                  <AccountCircleIcon />
+                )}
                 <div className="flex flex-col items-start">
                   <p className="text-[0.9rem] font-semibold ">
                     <Link

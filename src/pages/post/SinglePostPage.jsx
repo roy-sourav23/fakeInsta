@@ -7,10 +7,7 @@ import { db } from "../../../firebase";
 import {
   ArrowBack as ArrowBackIcon,
   MoreHoriz as MoreHorizIcon,
-  FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
-  SendOutlined as SendOutlinedIcon,
-  ChatBubbleOutlineOutlined as ChatBubbleOutlineOutlinedIcon,
-  BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
+  AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import SinglePostActionsComp from "../../components/post/SinglePostActionsComp";
@@ -73,10 +70,14 @@ const SinglePostPage = () => {
               <div className="postHeader flex items-center justify-between p-2">
                 <div className="flex items-center gap-2 py-1">
                   <Link to={`/${postCreator.username}`}>
-                    <img
-                      src={postCreator.profilePicURL}
-                      className="w-[2.25rem] h-[2.25rem] rounded-full object-cover"
-                    />
+                    {postCreator.profilePicURL ? (
+                      <img
+                        src={postCreator.profilePicURL}
+                        className="w-[2.25rem] h-[2.25rem] rounded-full object-cover"
+                      />
+                    ) : (
+                      <AccountCircleIcon className="profile_img" />
+                    )}
                   </Link>
 
                   <p className="text-[f5f5f5] text-[0.9rem] font-medium hover:text-[#0095f6]">
