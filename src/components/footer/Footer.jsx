@@ -44,7 +44,7 @@ const Footer = () => {
         </li>
 
         <li>
-          <div onClick={handleOpenModal}>
+          <div onClick={handleOpenModal} style={{ cursor: "pointer" }}>
             <AddBoxOutlinedIcon className="icon" />
           </div>
         </li>
