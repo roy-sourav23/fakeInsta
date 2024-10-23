@@ -17,14 +17,20 @@ const LoginPage = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
-  const location = useLocation();
+  const [isError, setIsError] = useState(false);
+  // const location = useLocation();
   const navigate = useNavigate();
 
-  const [msg, setMsg] = useState(location.state?.key || "");
-  setTimeout(() => {
-    setMsg("");
-  }, 4000);
+  const [msg, setMsg] = useState(loginSelector.message || "");
+  useEffect(() => {
+    if (msg) {
+      const timer = setTimeout(() => {
+        setMsg(null);
+        setIsError(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [msg]);
 
   useEffect(() => {
     document.title = "Login | FakeInsta";
@@ -33,8 +39,11 @@ const LoginPage = () => {
   useEffect(() => {
     if (loginSelector.user) {
       navigate("/", { state: { msg: "login successful!" } });
+    } else if (loginSelector.isError) {
+      setIsError(true);
+      setMsg(loginSelector.message);
     }
-  }, [loginSelector.user, navigate]);
+  }, [loginSelector, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,33 +52,23 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      dispatch(userLoggedIn(user));
-    } catch (e) {
-      // console.error("error", e);
-      const error = e.code?.split("/");
-      if (error) setError(error[1]);
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-    }
+    dispatch(userLoggedIn(user));
   };
 
   return (
     <div className="text-center relative min-h-screen w-full ">
       {msg ? (
         <Alert
-          severity="success"
-          className="absolute w-full max-w-[300px] top-[3rem] right-[4rem]"
+          severity={`${isError ? "error" : "success"}`}
+          className="absolute w-full max-w-[500px] top-[3rem] right-[4rem]"
         >
           {msg}
         </Alert>
       ) : null}
       <div className="formContainer">
-        <div className="errorContainer">
+        {/* <div className="errorContainer">
           <span className="">{error}</span>
-        </div>
+        </div> */}
         <form onSubmit={handleSubmit} className="form">
           <div className="logo">FakeInsta</div>
 
@@ -109,7 +108,7 @@ const LoginPage = () => {
           <button
             type="submit"
             className="hover:bg-[#0b3974]"
-            disabled={user.email == "" || (user.password == "" && error != "")}
+            disabled={user.email == "" || (user.password == "" && isError)}
           >
             Log in
           </button>

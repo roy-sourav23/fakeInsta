@@ -33,17 +33,26 @@ export const userUpdated = createAsyncThunk("auth/userUpdated", async (uid) => {
 
 export const userLoggedIn = createAsyncThunk(
   "auth/userLoggedIn",
-  async (user) => {
-    const response = await signInWithEmailAndPassword(
-      auth,
-      user.email,
-      user.password
-    );
+  async (user, thunkAPI) => {
+    try {
+      const response = await signInWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
 
-    const { uid } = response.user;
+      const { uid } = response.user;
 
-    const current_user = await fetchUserData(uid);
-    return current_user;
+      const current_user = await fetchUserData(uid);
+      return current_user;
+    } catch (e) {
+      let message = "";
+      if (e.code === "auth/invalid-credential") {
+        message = "invalid credentails! Check your email and password!";
+      }
+
+      return thunkAPI.rejectWithValue(message);
+    }
   }
 );
 
@@ -54,19 +63,25 @@ const LoginSlice = createSlice({
     logout(state, action) {
       state.user = null;
       state.message = "user logged out successfully!";
+      state.isLoading = false;
+      state.isError = false;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(userLoggedIn.pending, (state, action) => {
       state.isLoading = true;
+      state.isError = false;
+      state.user = null;
+      state.message = null;
     });
     builder.addCase(userLoggedIn.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isLoading = false;
+      state.isError = false;
       state.message = "user successfuly logged in";
     });
     builder.addCase(userLoggedIn.rejected, (state, action) => {
-      state.message = "can not sign in!";
+      state.message = action.payload;
       state.isError = true;
     });
 
