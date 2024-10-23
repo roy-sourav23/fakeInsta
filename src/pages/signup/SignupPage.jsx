@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../firebase.js";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import "./signup.scss";
 
 const SignupPage = () => {
@@ -19,6 +21,19 @@ const SignupPage = () => {
   useEffect(() => {
     document.title = "Signup | FakeInsta";
   }, []);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const passwordFieldRef = useRef(null);
+  const handlePasswordVisibility = (e) => {
+    if (showPassword) {
+      setShowPassword(false);
+      passwordFieldRef.current.type = "password";
+    } else {
+      setShowPassword(true);
+      passwordFieldRef.current.type = "text";
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -139,7 +154,23 @@ const SignupPage = () => {
                 placeholder="password "
                 onChange={handleChange}
                 autoComplete="on"
+                ref={passwordFieldRef}
               />
+              <span
+                style={{
+                  position: "absolute",
+                  right: "0%",
+                  top: "0%",
+                  cursor: "pointer",
+                }}
+                onClick={handlePasswordVisibility}
+              >
+                {showPassword ? (
+                  <VisibilityOffOutlinedIcon fontSize="small" />
+                ) : (
+                  <VisibilityOutlinedIcon fontSize="small" />
+                )}
+              </span>
             </label>
           </fieldset>
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -6,6 +6,8 @@ import Alert from "@mui/material/Alert";
 import "./login.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoggedIn } from "../../redux/loginSlice.js";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,20 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [msg, setMsg] = useState(loginSelector.message || "");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const passwordFieldRef = useRef(null);
+  const handlePasswordVisibility = (e) => {
+    if (showPassword) {
+      setShowPassword(false);
+      passwordFieldRef.current.type = "password";
+    } else {
+      setShowPassword(true);
+      passwordFieldRef.current.type = "text";
+    }
+  };
+
   useEffect(() => {
     if (msg) {
       const timer = setTimeout(() => {
@@ -101,7 +117,23 @@ const LoginPage = () => {
                 placeholder="password "
                 onChange={handleChange}
                 autoComplete="on"
+                ref={passwordFieldRef}
               />
+              <span
+                style={{
+                  position: "absolute",
+                  right: "0%",
+                  top: "0%",
+                  cursor: "pointer",
+                }}
+                onClick={handlePasswordVisibility}
+              >
+                {showPassword ? (
+                  <VisibilityOffOutlinedIcon fontSize="small" />
+                ) : (
+                  <VisibilityOutlinedIcon fontSize="small" />
+                )}
+              </span>
             </label>
           </fieldset>
 
