@@ -4,25 +4,25 @@
 
 @layer components {
   .formContainer {
-    @apply mx-auto max-w-[330px];
+    @apply mx-auto max-w-[330px] mt-3;
 
     .errorContainer {
-      @apply min-h-[2rem]  mb-3 flex items-center justify-center text-red-500 text-sm italic;
+      @apply min-h-[2rem] mb-1 flex items-center justify-center text-red-500 text-sm italic;
     }
 
     .form {
-      @apply border  border-slate-300 py-10 px-8 m-auto rounded-sm;
+      @apply border  border-slate-300 py-4 px-8 m-auto rounded-sm;
 
       .logo {
-        @apply text-center text-[2.5rem] select-none py-2 text-[#2f2f2f];
+        @apply text-center text-[2.5rem] select-none py-1 text-[#2f2f2f];
         font-family: "Lobster", sans-serif;
       }
       .sub-title {
-        @apply py-4 font-extrabold text-[#888686];
+        @apply py-2 font-extrabold text-[#888686];
       }
 
       fieldset {
-        @apply my-3;
+        @apply my-2;
 
         label {
           @apply relative;
@@ -38,7 +38,7 @@
       }
 
       button {
-        @apply bg-[#1877f2] hover:bg-[#0077c5] focus:bg-[#0086dd] w-[100%]  py-[0.4rem]  mt-6 rounded-lg text-[#eff8fe] font-medium select-none;
+        @apply bg-[#1877f2] hover:bg-[#0077c5] focus:bg-[#0086dd] w-[100%]  py-[0.5rem]  mt-3 rounded-lg text-[#eff8fe] font-medium select-none;
 
         &:disabled {
           @apply bg-[#60a1f6] cursor-not-allowed;

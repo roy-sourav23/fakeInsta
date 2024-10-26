@@ -8,16 +8,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLoggedIn } from "../../redux/loginSlice.js";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
 
   const loginSelector = useSelector((state) => state.login);
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
+  // const [user, setUser] = useState({
+  //   email: "",
+  //   password: "",
+  // });
 
   const [isError, setIsError] = useState(false);
   // const location = useLocation();
@@ -61,15 +63,30 @@ const LoginPage = () => {
     }
   }, [loginSelector, navigate]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(userLoggedIn(user));
-  };
+  const {
+    values,
+    errors,
+    touched,
+    isValid,
+    dirty,
+    handleChange,
+    handleSubmit,
+    handleBlur,
+  } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+    }),
+    onSubmit: async (values) => {
+      // e.preventDefault();
+      dispatch(userLoggedIn(values));
+      // console.log("values", values);
+    },
+  });
 
   return (
     <div className="text-center relative min-h-screen w-full ">
@@ -82,41 +99,53 @@ const LoginPage = () => {
         </Alert>
       ) : null}
       <div className="formContainer">
-        {/* <div className="errorContainer">
-          <span className="">{error}</span>
-        </div> */}
         <form onSubmit={handleSubmit} className="form">
           <div className="logo">FakeInsta</div>
 
           <fieldset>
             <label>
-              <span className={` ${user.email.length > 0 ? "" : "hidden"}`}>
+              <span className={` ${values.email.length > 0 ? "" : "hidden"}`}>
                 Email
               </span>
               <input
                 type="email"
                 name="email"
                 id="email"
-                value={user.email}
-                placeholder="Email "
+                placeholder="Email"
+                value={values.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 className="	"
               />
             </label>
+            <div
+              style={{
+                color: "red",
+                width: "100%",
+                fontSize: "12px",
+                height: "15px",
+                textAlign: "left",
+              }}
+            >
+              {touched.email && errors.email ? <p>{errors.email}</p> : null}
+            </div>
           </fieldset>
           <fieldset>
             <label>
-              <span className={` ${user.password.length > 0 ? "" : "hidden"}`}>
+              <span
+                className={` ${values.password.length > 0 ? "" : "hidden"}`}
+              >
                 Password
               </span>
               <input
                 type="password"
                 name="password"
                 id="password"
-                value={user.password}
-                placeholder="password "
-                onChange={handleChange}
+                placeholder="password"
                 autoComplete="on"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
                 ref={passwordFieldRef}
               />
               <span
@@ -135,12 +164,25 @@ const LoginPage = () => {
                 )}
               </span>
             </label>
+            <div
+              style={{
+                color: "red",
+                width: "100%",
+                fontSize: "12px",
+                height: "15px",
+                textAlign: "left",
+              }}
+            >
+              {touched.password && errors.password ? (
+                <p>{errors.password}</p>
+              ) : null}
+            </div>
           </fieldset>
 
           <button
             type="submit"
             className="hover:bg-[#0b3974]"
-            disabled={user.email == "" || (user.password == "" && isError)}
+            disabled={!(isValid && dirty)}
           >
             Log in
           </button>
