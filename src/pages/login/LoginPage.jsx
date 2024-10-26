@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Alert from "@mui/material/Alert";
 import "./login.scss";
@@ -16,13 +16,7 @@ const LoginPage = () => {
 
   const loginSelector = useSelector((state) => state.login);
 
-  // const [user, setUser] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-
   const [isError, setIsError] = useState(false);
-  // const location = useLocation();
   const navigate = useNavigate();
 
   const [msg, setMsg] = useState(loginSelector.message || "");
@@ -82,9 +76,7 @@ const LoginPage = () => {
       password: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
-      // e.preventDefault();
       dispatch(userLoggedIn(values));
-      // console.log("values", values);
     },
   });
 
