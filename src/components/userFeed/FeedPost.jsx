@@ -10,8 +10,9 @@ import {
 } from "@mui/icons-material";
 import { AccountCircle as AccountCircleIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import SinglePostActionsComp from "../post/SinglePostActionsComp";
 
-const FeedPost = ({ key, post }) => {
+const FeedPost = ({ post, postId }) => {
   const [postCreator, setPostCreator] = useState(null);
   const postCreatorID = post.createdBy;
 
@@ -23,15 +24,12 @@ const FeedPost = ({ key, post }) => {
       setPostCreator(userData);
     };
     getPostCreatorInfo();
-  }, [post, key]);
+  }, [post]);
 
   return (
     <>
       {postCreator && (
-        <div
-          key={key}
-          className="mb-12  max-w-[540px] border-b border-[#434343] pb-4"
-        >
+        <div className="mb-12  max-w-[540px] border-b border-[#434343] pb-4">
           <div className="postHeader flex items-center justify-between p-2">
             <div className="flex items-center gap-2 py-1">
               <Link to={`/${postCreator.username}`}>
@@ -63,19 +61,8 @@ const FeedPost = ({ key, post }) => {
             />
           </div>
           <div className="postFooter py-2 flex flex-col w-full items-start">
-            <div className="flex items-center justify-between w-full py-2">
-              <div className="flex items-center gap-3">
-                <FavoriteBorderOutlinedIcon />
-                <ChatBubbleOutlineOutlinedIcon />
-                <SendOutlinedIcon />
-              </div>
-              <div>
-                <BookmarkBorderOutlinedIcon />
-              </div>
-            </div>
-            <p className="p-2 text-[0.9rem] font-medium">
-              {post.likes.length} {post.likes.length < 2 ? "like" : "likes"}{" "}
-            </p>
+            <SinglePostActionsComp postId={postId} post={post} />
+
             <p>
               <span className="text-[f5f5f5] text-[0.9rem] font-medium pr-3">
                 {postCreator.username}
