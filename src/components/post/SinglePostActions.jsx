@@ -22,7 +22,7 @@ import {
 import { useSelector } from "react-redux";
 import { db } from "../../../firebase";
 
-const SinglePostActionComp = ({ postId, post, handleFocusCommentInput }) => {
+const SinglePostAction = ({ postId, post, handleFocusCommentInput }) => {
   const [currentPost, setCurrentPost] = useState(post);
   const [isLikedByUser, setIsLikedByUser] = useState(false);
   // const [isPostBookmarked, setPostBookmarked] = useState(false);
@@ -121,4 +121,4 @@ const SinglePostActionComp = ({ postId, post, handleFocusCommentInput }) => {
   );
 };
 
-export default SinglePostActionComp;
+export default SinglePostAction;

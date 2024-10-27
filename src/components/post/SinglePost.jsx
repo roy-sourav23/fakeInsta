@@ -14,7 +14,7 @@ import {
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
 
-import SinglePostActionsComp from "../../components/post/SinglePostActionsComp";
+import SinglePostActions from "../../components/post/SinglePostActions";
 import { Button } from "@mui/material";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
@@ -184,7 +184,7 @@ const SinglePost = ({ postId }) => {
           />
         </div>
         <div className="postFooter py-2 flex flex-col w-full items-start">
-          <SinglePostActionsComp
+          <SinglePostActions
             postId={postId}
             post={post}
             handleFocusCommentInput={handleFocusCommentInput}
