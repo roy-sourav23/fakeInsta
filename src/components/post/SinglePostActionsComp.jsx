@@ -22,9 +22,10 @@ import {
 import { useSelector } from "react-redux";
 import { db } from "../../../firebase";
 
-const SinglePostActionComp = ({ postId, post }) => {
+const SinglePostActionComp = ({ postId, post, handleFocusCommentInput }) => {
   const [currentPost, setCurrentPost] = useState(post);
   const [isLikedByUser, setIsLikedByUser] = useState(false);
+  // const [isPostBookmarked, setPostBookmarked] = useState(false);
   const authUser = useSelector((state) => state.login.user);
   const currentUserId = authUser.uid;
 
@@ -94,6 +95,8 @@ const SinglePostActionComp = ({ postId, post }) => {
     getPostInfo();
   };
 
+  const handleBookmark = async (e) => {};
+
   return (
     <div className="py-2 flex flex-col w-full items-start">
       <div className="flex items-center justify-between w-full py-2">
@@ -101,8 +104,9 @@ const SinglePostActionComp = ({ postId, post }) => {
           <div onClick={handleLike} style={{ cursor: "pointer" }}>
             {isLikedByUser ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
           </div>
-
-          <ChatBubbleOutlineOutlinedIcon />
+          <div onClick={handleFocusCommentInput} style={{ cursor: "pointer" }}>
+            <ChatBubbleOutlineOutlinedIcon />
+          </div>
           <SendOutlinedIcon />
         </div>
         <div>

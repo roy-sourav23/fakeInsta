@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-import FeedPost from "./FeedPost";
 import { useSelector } from "react-redux";
+import SinglePost from "../post/SinglePost";
 
 const FeedPosts = () => {
   const authUser = useSelector((state) => state.login.user);
@@ -58,7 +58,7 @@ const FeedPosts = () => {
     <div className=" max-w-[540px] mx-auto ">
       {feedPosts &&
         feedPosts.map((post) => {
-          return <FeedPost key={post.id} post={post} postId={post.postID} />;
+          return <SinglePost key={post.id} postId={post.postID} />;
         })}
     </div>
   );
