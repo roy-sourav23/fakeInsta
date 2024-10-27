@@ -3,12 +3,8 @@ import { db } from "../../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import {
   MoreHoriz as MoreHorizIcon,
-  FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
-  SendOutlined as SendOutlinedIcon,
-  ChatBubbleOutlineOutlined as ChatBubbleOutlineOutlinedIcon,
-  BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
+  AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
-import { AccountCircle as AccountCircleIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import SinglePostActionsComp from "../post/SinglePostActionsComp";
 
@@ -57,7 +53,7 @@ const FeedPost = ({ post, postId }) => {
           <div className="mediaContainer w-full h-auto border border-[#434343]">
             <img
               src={post.mediaURL}
-              className="w-full max-w-[450px] h-full object-contain  mx-auto"
+              className="w-full max-w-[450px] h-full max-h-[300px] object-contain  mx-auto"
             />
           </div>
           <div className="postFooter py-2 flex flex-col w-full items-start">

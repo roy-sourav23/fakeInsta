@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import FeedPost from "./FeedPost";
 import { useSelector } from "react-redux";
@@ -18,53 +11,24 @@ const FeedPosts = () => {
   const [loading, setLoading] = useState(true);
 
   const getSinglePostData = async (postID) => {
-    const postRef = doc(db, "posts", postID);
-    const postSnap = await getDoc(postRef);
-
-    // let postData = null;
-    if (postSnap.exists()) {
-      return { postID: postID, ...postSnap.data() };
-    }
-    return {};
+    const postSnap = await getDoc(doc(db, "posts", postID));
+    return postSnap.exists() ? { postID: postID, ...postSnap.data() } : null;
   };
 
-  const postsPerFollowing = async (userID) => {
-    const userDocRef = doc(db, "users", userID);
-    const userDocSnap = await getDoc(userDocRef);
+  const getPostsByUser = async (userID) => {
+    const userDocSnap = await getDoc(doc(db, "users", userID));
 
-    let posts = null;
-    let postData = [];
-    if (userDocSnap.exists()) {
-      posts = userDocSnap.data().posts;
-      const postsPromise = await posts.map(async (postID) => {
-        const data = await getSinglePostData(postID);
-        postData = [...postData, data];
-        return data;
-      });
+    if (!userDocSnap.exists()) return [];
 
-      await Promise.all(postsPromise);
-      // console.log("postData", postData);
-
-      // console.log("posts", posts);
-    } else {
-      console.log("no posts");
-    }
-    return postData;
+    const posts = userDocSnap.data().posts || [];
+    return await Promise.all(posts.map(getSinglePostData));
   };
 
   const getAllPosts = async () => {
-    const followingList = authUser.following;
+    const postPromises = authUser.following.map(getPostsByUser);
+    const postList = await Promise.all(postPromises);
 
-    let postList = [];
-    const postListPromise = await followingList.map(async (userID) => {
-      const posts = await postsPerFollowing(userID);
-      postList = [...postList, ...posts];
-      return posts;
-    });
-
-    await Promise.all(postListPromise);
-    // console.log("x", postList);
-    return postList;
+    return postList.flat();
   };
 
   useEffect(() => {
@@ -73,10 +37,10 @@ const FeedPosts = () => {
       setFeedPosts(allFeedPosts);
       setLoading(false);
     };
-    authUser.following.length > 0 && fetchFeedPosts();
-
-    // getAllPosts();
-  }, []);
+    if (authUser.following.length > 0) {
+      fetchFeedPosts();
+    }
+  }, [authUser.following]);
 
   if (authUser.following.length == 0) {
     return (
@@ -90,8 +54,6 @@ const FeedPosts = () => {
     return <p className="text-center  py-5 text-[#f5f5f5]">Posts loading...</p>;
   }
 
-  // console.log("feedPosts", feedPosts);
-
   return (
     <div className=" max-w-[540px] mx-auto ">
       {feedPosts &&
@@ -99,7 +61,6 @@ const FeedPosts = () => {
           return <FeedPost key={post.id} post={post} postId={post.postID} />;
         })}
     </div>
-    // <div></div>
   );
 };
 
