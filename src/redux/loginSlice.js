@@ -86,7 +86,7 @@ const LoginSlice = createSlice({
     });
 
     builder.addCase(userUpdated.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.user = { ...state.user, ...action.payload };
     });
   },
 });

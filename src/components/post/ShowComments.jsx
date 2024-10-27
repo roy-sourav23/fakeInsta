@@ -1,6 +1,7 @@
 import React from "react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Link } from "react-router-dom";
+import { AccountCircle as AccountCircleIcon } from "@mui/icons-material";
 
 const ShowComments = ({ comments, handleDeleteComment }) => {
   return (

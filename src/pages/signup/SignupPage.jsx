@@ -84,6 +84,7 @@ const SignupPage = () => {
         followers: [],
         following: [],
         posts: [],
+        bookmarks: [],
       });
 
       // console.log("reponse2", response2);

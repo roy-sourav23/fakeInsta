@@ -5,10 +5,12 @@ import "./showProfile.scss";
 import { ImageList, ImageListItem } from "@mui/material";
 import {
   AppsOutlined as AppsOutlinedIcon,
-  BookmarkBorderOutlined as BookmarkBorderOutlinedIcon,
+  Bookmarks as BookmarksIcon,
   AccountBoxOutlined as AccountBoxOutlinedIcon,
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
+
+// import BookmarksIcon from '@mui/icons-material/Bookmarks';
 
 import { Link, useParams } from "react-router-dom";
 
@@ -156,7 +158,7 @@ const ShowProfilePage = () => {
                 <span>POSTS</span>
               </li>
               <li className=" link ">
-                <BookmarkBorderOutlinedIcon className="icon" />
+                <BookmarksIcon className="icon" />
                 <span>SAVED</span>
               </li>
               <li className=" link ">
