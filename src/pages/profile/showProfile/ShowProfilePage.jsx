@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../../components/layout/Layout";
 import "./showProfile.scss";
 
-import { ImageList, ImageListItem } from "@mui/material";
+import { Box, ImageList, ImageListItem, Tab, Tabs } from "@mui/material";
 import {
   AppsOutlined as AppsOutlinedIcon,
   Bookmarks as BookmarksIcon,
@@ -26,6 +26,25 @@ import { db } from "../../../../firebase";
 
 import FollowUnfollowButton from "../../../components/followUnfollowButton./FollowUnfollowButton";
 import { useSelector } from "react-redux";
+import PostList from "./PostList";
+import BookmarkList from "./BookmarkList";
+import TagList from "./TagList";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
 
 const ShowProfilePage = () => {
   const { userName } = useParams();
@@ -35,6 +54,12 @@ const ShowProfilePage = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [allPosts, setAllPosts] = useState(null);
   const [totalPosts, setTotalPosts] = useState(authUser.posts.length);
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
     document.title = "profile | FakeInsta";
@@ -151,52 +176,80 @@ const ShowProfilePage = () => {
               following
             </li>
           </ul>
-          <div className="bottom">
-            <ul className="links">
-              <li className=" link active">
-                <AppsOutlinedIcon className="icon" />
-                <span>POSTS</span>
-              </li>
-              <li className=" link ">
-                <BookmarksIcon className="icon" />
-                <span>SAVED</span>
-              </li>
-              <li className=" link ">
-                <AccountBoxOutlinedIcon className="icon" />
-                <span>TAGGED</span>
-              </li>
-            </ul>
-
-            <ImageList
-              className="imageList z-0"
-              cols={3}
-              rowHeight="auto"
-              gap={4}
-              sx={{
-                zIndex: 0,
-                // border: "1px solid blue", // for testing an ui error
-              }}
+          <Box sx={{ width: "100%" }} className="bottom">
+            <Box
+              sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}
             >
-              {allPosts &&
-                allPosts.map((post) => (
-                  <ImageListItem key={post.id}>
-                    <Link to={`/p/${post.id}/`}>
-                      <img
-                        srcSet={`${post.mediaURL}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                        src={`${post.mediaURL}?w=164&h=164&fit=crop&auto=format`}
-                        alt={post.mediaURL}
-                        loading="lazy"
-                        style={{
-                          width: "100%",
-                          height: "200px",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </Link>
-                  </ImageListItem>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                className="border-b border-[#434343]"
+                sx={{
+                  width: "100%",
+                  color: "#a8a8a8",
+                  maxHeight: "30px",
+                  "& .MuiTabs-flexContainer": {
+                    justifyContent: "center",
+                  },
+                  "& .MuiTabs-indicator": { display: "none" },
+                }}
+              >
+                {[
+                  { icon: AppsOutlinedIcon, label: "POSTS" },
+                  { icon: BookmarksIcon, label: "SAVED" },
+                  { icon: AccountBoxOutlinedIcon, label: "TAGGED" },
+                ].map((tab, index) => (
+                  <Tab
+                    key={tab.label}
+                    label={
+                      <div
+                        className={`${
+                          value === index
+                            ? "text-white font-bold"
+                            : "text-[#a8a8a8]"
+                        } flex md:flex-row md:items-center md:space-x-1  `}
+                      >
+                        <tab.icon className="w-3 h-3 md:w-4 md:h-4" />
+                        <span
+                          className={`${
+                            value === index
+                              ? "text-white font-bold"
+                              : "text-[#a8a8a8]"
+                          } hidden md:inline`}
+                          style={{
+                            color: value === index ? "#f5f5f5" : "#a8a8a8",
+                            fontWeight: value === index ? "bold" : "normal",
+                          }}
+                        >
+                          {tab.label}
+                        </span>
+                      </div>
+                    }
+                    sx={{
+                      py: 1,
+                      minWidth: "100px",
+                      width: "33%",
+
+                      borderTop: value === index ? "2px solid white" : "none",
+                      "& .MuiTab-iconWrapper": {
+                        color: value === index ? "#f5f5f5" : "#a8a8a8",
+                      },
+                    }}
+                  />
                 ))}
-            </ImageList>
-          </div>
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <PostList allPosts={allPosts} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <BookmarkList allPosts={allPosts} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              <TagList />
+            </CustomTabPanel>
+          </Box>
         </div>
       ) : (
         <p className="text-white">Loading...</p>
