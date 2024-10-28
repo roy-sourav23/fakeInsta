@@ -54,6 +54,7 @@ const ShowProfilePage = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [allPosts, setAllPosts] = useState(null);
   const [totalPosts, setTotalPosts] = useState(authUser.posts.length);
+  const [bookmarks, setBookmarks] = useState([]);
 
   const [value, setValue] = React.useState(0);
 
@@ -90,8 +91,7 @@ const ShowProfilePage = () => {
   }, [userName, authUser]);
 
   const fetchData = async (post) => {
-    const docRef = doc(db, "posts", post);
-    const docSnap = await getDoc(docRef);
+    const docSnap = await getDoc(doc(db, "posts", post));
 
     if (docSnap.exists()) {
       return { ...docSnap.data(), id: docSnap.id };
@@ -111,8 +111,19 @@ const ShowProfilePage = () => {
   };
 
   useEffect(() => {
-    userProfile && fetchAllData();
+    userProfile && fetchAllData() && fetchBookmarks();
   }, [userProfile]);
+
+  const fetchBookmarks = async () => {
+    const fetchSingleBookmark = async (postId) => {
+      const postDocSnap = await getDoc(doc(db, "posts", postId));
+      return postDocSnap.exists() ? postDocSnap.data() : {};
+    };
+
+    const bookmarkPromises = authUser.bookmarks.map(fetchSingleBookmark);
+    const bookmarkList = await Promise.all(bookmarkPromises);
+    setBookmarks(bookmarkList);
+  };
 
   return (
     <Layout>
@@ -244,7 +255,7 @@ const ShowProfilePage = () => {
               <PostList allPosts={allPosts} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <BookmarkList allPosts={allPosts} />
+              <BookmarkList bookmarks={bookmarks} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
               <TagList />

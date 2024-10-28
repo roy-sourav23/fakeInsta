@@ -2,7 +2,7 @@ import { ImageList, ImageListItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 
-const BookmarkList = ({ allPosts }) => {
+const BookmarkList = ({ bookmarks }) => {
   return (
     <div>
       <ImageList
@@ -15,8 +15,8 @@ const BookmarkList = ({ allPosts }) => {
           // border: "1px solid blue", // for testing an ui error
         }}
       >
-        {allPosts &&
-          allPosts.map((post) => (
+        {bookmarks &&
+          bookmarks.map((post) => (
             <ImageListItem key={post.id}>
               <Link to={`/p/${post.id}/`}>
                 <img
