@@ -10,6 +10,10 @@ import {
   AddBoxOutlined as AddBoxOutlinedIcon,
   Person as PersonIcon,
 } from "@mui/icons-material";
+import {
+  MoreHoriz as MoreHorizIcon,
+  AccountCircle as AccountCircleIcon,
+} from "@mui/icons-material";
 
 import { Link, NavLink } from "react-router-dom";
 import PostModal from "../postModal/PostModal";
@@ -81,10 +85,14 @@ const SidebarDrawer = ({ open }) => {
             <small>results</small>
             <div className="bg-[#212020] py-2 px-3 rounded flex items-center justify-between">
               <div className="flex items-center gap-5">
-                <img
-                  src={user.profilePicURL}
-                  className="w-[40px] h-[40px] object-cover rounded-full"
-                />
+                {user.profilePicURL ? (
+                  <img
+                    src={user.profilePicURL}
+                    className="w-[40px] h-[40px] object-cover rounded-full"
+                  />
+                ) : (
+                  <AccountCircleIcon className="profile_img w-[40px] h-[40px] object-cover rounded-full" />
+                )}
                 <p>
                   <NavLink
                     to={`/${user.username}`}

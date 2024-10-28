@@ -67,7 +67,7 @@ const SinglePostAction = ({ postId, post, handleFocusCommentInput }) => {
       // Query the specific post where likes array contains the current user
       const q = query(
         usersRef,
-
+        where(documentId(), "==", authUser.uid),
         where("bookmarks", "array-contains", postId)
       );
 

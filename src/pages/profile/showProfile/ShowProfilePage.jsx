@@ -112,7 +112,9 @@ const ShowProfilePage = () => {
   const fetchBookmarks = async () => {
     const fetchSingleBookmark = async (postId) => {
       const postDocSnap = await getDoc(doc(db, "posts", postId));
-      return postDocSnap.exists() ? postDocSnap.data() : {};
+      return postDocSnap.exists()
+        ? { ...postDocSnap.data(), id: postDocSnap.id }
+        : {};
     };
 
     const bookmarkPromises = authUser.bookmarks.map(fetchSingleBookmark);

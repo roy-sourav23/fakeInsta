@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import React from "react";
 
 const PostList = ({ allPosts }) => {
+  console.log("alllposts", allPosts);
+
   return (
     <div>
       <ImageList

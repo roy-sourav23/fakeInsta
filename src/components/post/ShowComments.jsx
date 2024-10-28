@@ -2,8 +2,10 @@ import React from "react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Link } from "react-router-dom";
 import { AccountCircle as AccountCircleIcon } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 
 const ShowComments = ({ comments, handleDeleteComment }) => {
+  const authUser = useSelector((state) => state.login.user);
   return (
     <div style={{ width: "100%" }}>
       <p>Comments</p>
@@ -29,7 +31,7 @@ const ShowComments = ({ comments, handleDeleteComment }) => {
                 <AccountCircleIcon className="profile_img" />
               )}
               <Link
-                to={`${comment.createdBy}`}
+                to={`/${comment.createdBy}`}
                 style={{ fontWeight: "500", padding: "0 0.5rem" }}
               >
                 {comment.createdBy}
@@ -39,12 +41,14 @@ const ShowComments = ({ comments, handleDeleteComment }) => {
                 {comment.text}
               </span>
             </div>
-            <div
-              onClick={() => handleDeleteComment(comment.id)}
-              style={{ cursor: "pointer" }} // Make icon clickable
-            >
-              <DeleteOutlineOutlinedIcon fontSize="small" />
-            </div>
+            {comment.createdBy === authUser.username ? (
+              <div
+                onClick={() => handleDeleteComment(comment.id)}
+                style={{ cursor: "pointer" }}
+              >
+                <DeleteOutlineOutlinedIcon fontSize="small" />
+              </div>
+            ) : null}
           </div>
         );
       })}

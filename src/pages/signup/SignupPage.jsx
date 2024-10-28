@@ -248,12 +248,7 @@ const SignupPage = () => {
                 margin: "0 0.4rem",
               }}
             >
-              {errors.usernameerrors.email &&
-              (touched.email || values.email) &&
-              ((touched.usernameerrors.email &&
-                (touched.email || values.email)) ||
-                (values.usernameerrors.email &&
-                  (touched.email || values.email))) ? (
+              {errors.username && (touched.username || values.username) ? (
                 <p>{errors.username}</p>
               ) : null}
             </div>
