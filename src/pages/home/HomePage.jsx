@@ -29,7 +29,7 @@ const HomePage = () => {
 
   const handleLogout = (e) => {
     dispatch(logout());
-    navigate("/accounts/login");
+    navigate("/accounts/login", { state: { key: "successfully logged out!" } });
   };
 
   if (!authUser) {

@@ -11,21 +11,12 @@ const initialState = {
 };
 
 const fetchUserData = async (uid) => {
-  const userRef = doc(db, "users", uid);
-  const userDocSnap = await getDoc(userRef);
-
-  let userData = null;
-  if (userDocSnap.exists()) {
-    userData = userDocSnap.data();
-  } else {
-    console.log("no such user");
-  }
-  return userData;
+  const userDocSnap = await getDoc(doc(db, "users", uid));
+  return userDocSnap.exists() ? userDocSnap.data() : {};
 };
 
 export const userUpdated = createAsyncThunk("auth/userUpdated", async (uid) => {
-  const userRef = doc(db, "users", uid);
-  const userDocSnap = await getDoc(userRef);
+  const userDocSnap = await getDoc(doc(db, "users", uid));
   const userData = userDocSnap.data();
 
   return userData;

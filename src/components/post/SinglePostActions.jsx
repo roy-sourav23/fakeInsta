@@ -93,8 +93,6 @@ const SinglePostAction = ({ postId, post, handleFocusCommentInput }) => {
     checkBookmarkStatus();
   }, [postId, currentUserId]);
 
-  console.log("bookmarked", isBookmarkedByUser);
-
   const getPostInfo = async () => {
     const postRef = doc(db, "posts", postId);
     const postDocSnap = await getDoc(postRef);

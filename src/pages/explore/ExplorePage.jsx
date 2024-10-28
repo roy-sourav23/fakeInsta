@@ -38,8 +38,6 @@ const ExplorePage = () => {
     enterData();
   }, []);
 
-  // console.log("data", allPosts);
-
   if (isLoading) {
     return (
       <Layout>

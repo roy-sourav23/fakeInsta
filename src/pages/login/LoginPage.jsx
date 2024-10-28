@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import "./login.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,13 +11,12 @@ import * as Yup from "yup";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-
   const loginSelector = useSelector((state) => state.login);
 
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-
-  const [msg, setMsg] = useState(loginSelector.message || "");
+  const location = useLocation();
+  const [msg, setMsg] = useState(location.state?.key || null);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -33,6 +30,10 @@ const LoginPage = () => {
       passwordFieldRef.current.type = "text";
     }
   };
+
+  useEffect(() => {
+    setMsg(location.state?.key || null);
+  }, [location.state]);
 
   useEffect(() => {
     if (msg) {
@@ -52,8 +53,8 @@ const LoginPage = () => {
     if (loginSelector.user) {
       navigate("/", { state: { msg: "login successful!" } });
     } else if (loginSelector.isError) {
-      setIsError(true);
       setMsg(loginSelector.message);
+      setIsError(true);
     }
   }, [loginSelector, navigate]);
 
@@ -90,6 +91,7 @@ const LoginPage = () => {
           {msg}
         </Alert>
       ) : null}
+
       <div className="formContainer">
         <form onSubmit={handleSubmit} className="form">
           <div className="logo">FakeInsta</div>

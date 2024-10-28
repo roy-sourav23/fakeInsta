@@ -27,10 +27,8 @@ const EditProfilePage = () => {
     const fetchData = async () => {
       const userRef = doc(db, "users", userID);
       const userSnap = await getDoc(userRef);
-      // console.log("userId", userID);
 
       if (userSnap.exists()) {
-        // console.log("Document data:", docSnap.data());
         const { profilePicURL, username, fullName, bio, website_url } =
           userSnap.data();
 
@@ -51,7 +49,6 @@ const EditProfilePage = () => {
 
   const handleImageChange = async (e) => {
     const selectedFile = e.target.files[0];
-    // console.log("image", selectedFile);
 
     if (selectedFile) {
       const newImageName = crypto.randomUUID();
@@ -83,23 +80,14 @@ const EditProfilePage = () => {
         },
         () => {
           // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             const userRef = doc(db, "users", userID);
 
-            // Set the "capital" field of the city 'DC'
             await updateDoc(userRef, {
               profilePicURL: downloadURL,
             });
 
-            // localStorage.setItem(
-            //   "user",
-            //   JSON.stringify({ ...user, profilePicURL: downloadURL })
-            // );
             setProfile((prev) => ({ ...prev }));
-            // console.log("user", user);
-
-            // console.log("File available at", downloadURL);
           });
         }
       );

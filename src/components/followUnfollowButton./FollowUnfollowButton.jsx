@@ -58,7 +58,6 @@ const FollowUnfollowButton = ({ userID }) => {
       }
 
       const currentUserData = currentUserDoc.data();
-      // console.log("currentUserData", currentUserData);
 
       const isFollowing =
         currentUserData.following && currentUserData.following.includes(userID);

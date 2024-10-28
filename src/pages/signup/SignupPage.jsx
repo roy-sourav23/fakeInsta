@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../firebase.js";
@@ -86,8 +85,6 @@ const SignupPage = () => {
         posts: [],
         bookmarks: [],
       });
-
-      // console.log("reponse2", response2);
 
       navigate("/accounts/login", { state: { key: "signup successful!" } });
     } catch (e) {

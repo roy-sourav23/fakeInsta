@@ -93,12 +93,7 @@ const ShowProfilePage = () => {
   const fetchData = async (post) => {
     const docSnap = await getDoc(doc(db, "posts", post));
 
-    if (docSnap.exists()) {
-      return { ...docSnap.data(), id: docSnap.id };
-    } else {
-      console.log("No such document!");
-      return null;
-    }
+    return docSnap.exists() ? { ...docSnap.data(), id: docSnap.id } : {};
   };
 
   const fetchAllData = async () => {
