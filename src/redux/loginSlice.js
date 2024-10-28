@@ -57,6 +57,12 @@ const LoginSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
     },
+    resetLoginState(state, action) {
+      state.user = null;
+      state.isLoading = false;
+      state.isError = false;
+      state.message = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(userLoggedIn.pending, (state, action) => {
@@ -83,4 +89,4 @@ const LoginSlice = createSlice({
 });
 
 export default LoginSlice.reducer;
-export const { logout } = LoginSlice.actions;
+export const { logout, resetLoginState } = LoginSlice.actions;

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import "./login.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { userLoggedIn } from "../../redux/loginSlice.js";
+import { resetLoginState, userLoggedIn } from "../../redux/loginSlice.js";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useFormik } from "formik";
@@ -16,7 +16,7 @@ const LoginPage = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [msg, setMsg] = useState(location.state?.key || null);
+  const [msg, setMsg] = useState(null);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -32,14 +32,16 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    setMsg(location.state?.key || null);
-  }, [location.state]);
+    dispatch(resetLoginState());
+    setMsg(location?.state?.msg || null);
+  }, [location.state, dispatch]);
 
   useEffect(() => {
     if (msg) {
       const timer = setTimeout(() => {
         setMsg(null);
         setIsError(false);
+        dispatch(resetLoginState());
       }, 4000);
       return () => clearTimeout(timer);
     }
@@ -79,18 +81,20 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       dispatch(userLoggedIn(values));
     },
+    validateOnChange: true,
+    validateOnBlur: true,
   });
 
   return (
     <div className="text-center relative min-h-screen w-full ">
-      {msg ? (
+      {msg && (
         <Alert
           severity={`${isError ? "error" : "success"}`}
           className="absolute w-full max-w-[500px] top-[3rem] right-[4rem]"
         >
           {msg}
         </Alert>
-      ) : null}
+      )}
 
       <div className="formContainer">
         <form onSubmit={handleSubmit} className="form">
@@ -121,7 +125,9 @@ const LoginPage = () => {
                 textAlign: "left",
               }}
             >
-              {touched.email && errors.email ? <p>{errors.email}</p> : null}
+              {errors.email && (touched.email || values.email) ? (
+                <p>{errors.email}</p>
+              ) : null}
             </div>
           </fieldset>
           <fieldset>
@@ -167,7 +173,7 @@ const LoginPage = () => {
                 textAlign: "left",
               }}
             >
-              {touched.password && errors.password ? (
+              {errors.password && (touched.password || values.password) ? (
                 <p>{errors.password}</p>
               ) : null}
             </div>

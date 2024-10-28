@@ -86,7 +86,7 @@ const SignupPage = () => {
         bookmarks: [],
       });
 
-      navigate("/accounts/login", { state: { key: "signup successful!" } });
+      navigate("/accounts/login", { state: { msg: "signup successful!" } });
     } catch (e) {
       handleError(e.code);
     }
@@ -104,11 +104,14 @@ const SignupPage = () => {
     email: Yup.string().email("Invalid email address").required("Required"),
     fullName: Yup.string()
       .required("Required")
-
       .min(3, "Fullname must contain at least 3 characters")
       .matches(
         /^[A-Z][a-z]*(\s[A-Z][a-z]*)*$/,
-        "Full name must be capitalized"
+        "Full name must be capitalized and contain only letters"
+      )
+      .matches(
+        /^[a-zA-Z\s]+$/,
+        "Full name must contain only letters and spaces"
       ),
 
     username: Yup.string()
@@ -141,6 +144,8 @@ const SignupPage = () => {
     onSubmit: async (user) => {
       await handleSignup(user);
     },
+    validateOnChange: true,
+    validateOnBlur: true,
   });
 
   return (
@@ -179,7 +184,9 @@ const SignupPage = () => {
                 margin: "0 0.4rem",
               }}
             >
-              {touched.email && errors.email ? <p>{errors.email}</p> : null}
+              {errors.email && (touched.email || values.email) ? (
+                <p>{errors.email}</p>
+              ) : null}
             </div>
           </fieldset>
 
@@ -209,7 +216,7 @@ const SignupPage = () => {
                 margin: "0 0.4rem",
               }}
             >
-              {touched.fullName && errors.fullName ? (
+              {errors.fullName && (touched.fullName || values.fullName) ? (
                 <p>{errors.fullName}</p>
               ) : null}
             </div>
@@ -241,7 +248,12 @@ const SignupPage = () => {
                 margin: "0 0.4rem",
               }}
             >
-              {touched.username && errors.username ? (
+              {errors.usernameerrors.email &&
+              (touched.email || values.email) &&
+              ((touched.usernameerrors.email &&
+                (touched.email || values.email)) ||
+                (values.usernameerrors.email &&
+                  (touched.email || values.email))) ? (
                 <p>{errors.username}</p>
               ) : null}
             </div>
@@ -289,7 +301,7 @@ const SignupPage = () => {
                 margin: "0 0.4rem",
               }}
             >
-              {touched.password && errors.password ? (
+              {errors.password && (touched.password || values.password) ? (
                 <p>{errors.password}</p>
               ) : null}
             </div>
@@ -340,7 +352,8 @@ const SignupPage = () => {
                 margin: "0 0.4rem",
               }}
             >
-              {touched.confirmPassword && errors.confirmPassword ? (
+              {errors.confirmPassword &&
+              (touched.confirmPassword || values.confirmPassword) ? (
                 <p>{errors.confirmPassword}</p>
               ) : null}
             </div>
